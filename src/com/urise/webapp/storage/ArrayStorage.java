@@ -7,15 +7,14 @@ import com.urise.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void save(Resume resume) {
-        if (getIndex(resume.getUuid()) != -1) {
-            System.out.println("The Resume with id = " + resume.getUuid() + " already exists.");
-        } else if (size == storage.length) {
-            System.out.println("The resume can not be saved. Storage is overflowed.");
-        } else {
-            storage[size] = resume;
-            size++;
-        }
+    @Override
+    protected void fillDeletedElement(int index) {
+        storage[index] = storage[size - 1];
+    }
+
+    @Override
+    protected void insertElement(Resume resume, int index) {
+        storage[size] = resume;
     }
 
     protected int getIndex(String uuid) {
