@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.fail;
 
-public class SortedArrayStorageTest extends AbstractStorageTest {
+public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
-    public SortedArrayStorageTest() {
-        super(new SortedArrayStorage());
+    public AbstractArrayStorageTest(Storage storage) {
+        super(storage);
     }
 
     @Test(expected = StorageException.class)
