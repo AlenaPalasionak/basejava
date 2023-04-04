@@ -6,6 +6,8 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -54,12 +56,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        final Resume[] resumes = storage.getAll();
-        assertEquals(3, resumes.length);
-        assertEquals(RESUME_1, resumes[0]);
-        assertEquals(RESUME_2, resumes[1]);
-        assertEquals(RESUME_3, resumes[2]);
+    public void getAllSorted() {
+        final List<Resume> resumes = storage.getAllSorted();
+        assertEquals(3, resumes.size());
+        assertEquals(RESUME_1, resumes.get(0));
+        assertEquals(RESUME_2, resumes.get(1));
+        assertEquals(RESUME_3, resumes.get(2));
     }
 
     @Test
