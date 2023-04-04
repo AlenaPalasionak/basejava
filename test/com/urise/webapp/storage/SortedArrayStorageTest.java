@@ -1,30 +1,8 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.StorageException;
-import com.urise.webapp.model.Resume;
-import org.junit.Test;
-
-import static org.junit.Assert.fail;
-
-public class SortedArrayStorageTest extends AbstractStorageTest {
+public class SortedArrayStorageTest extends AbstractArrayStorageTest {
 
     public SortedArrayStorageTest() {
         super(new SortedArrayStorage());
-    }
-
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        int i = 3;
-        try {
-            for (i = 3; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (Exception e) {
-            if (i < AbstractArrayStorage.STORAGE_LIMIT) {
-                fail("Storage is overflowed ahead of time");
-            } else {
-                throw new StorageException("Storage overflowed ", String.valueOf(i));
-            }
-        }
     }
 }
