@@ -2,14 +2,11 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MapUuidStorage extends AbstractStorage {
 
-    Map<String, Resume> resumesMap = new TreeMap<>();
+    Map<String, Resume> resumesMap = new HashMap<>();
 
     @Override
     protected Object getSearchKey(String uuid) {
@@ -17,28 +14,28 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return resumesMap.containsKey(searchKey);
+    protected boolean isExist(Object uuid) {
+        return resumesMap.containsKey((String) uuid);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
-        resumesMap.put(searchKey.toString(), r);
+    protected void doSave(Resume r, Object uuid) {
+        resumesMap.put((String) uuid, r);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        resumesMap.put(searchKey.toString(), r);
+    protected void doUpdate(Resume r, Object uuid) {
+        resumesMap.put((String) uuid, r);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return resumesMap.get(searchKey);
+    protected Resume doGet(Object uuid) {
+        return resumesMap.get((String) uuid);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        resumesMap.remove(searchKey);
+    protected void doDelete(Object uuid) {
+        resumesMap.remove((String) uuid);
     }
 
     @Override
@@ -47,12 +44,12 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        return new ArrayList<>(resumesMap.values());
+    public void clear() {
+        resumesMap.clear();
     }
 
     @Override
-    public void clear() {
-        resumesMap.clear();
+    protected List<Resume> doCopyAll() {
+        return new ArrayList<>(resumesMap.values());
     }
 }

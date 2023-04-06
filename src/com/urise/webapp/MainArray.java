@@ -14,6 +14,7 @@ import java.util.List;
  * (just run, no need to understand)
  */
 public class MainArray {
+
     private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) throws IOException {
