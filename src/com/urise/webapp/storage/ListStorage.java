@@ -5,14 +5,14 @@ import com.urise.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
-    private List<Resume> resumesList = new ArrayList<>();
+    private final List<Resume> resumes = new ArrayList<>();
 
     @Override
     protected Integer getSearchKey(String uuid) {
-        for (int i = 0; i < resumesList.size(); i++) {
-            if (uuid.equals(resumesList.get(i).getUuid())) {
+        for (int i = 0; i < resumes.size(); i++) {
+            if (uuid.equals(resumes.get(i).getUuid())) {
                 return i;
             }
         }
@@ -20,47 +20,47 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(Integer searchKey) {
         return searchKey != null;
     }
 
     @Override
     public int size() {
-        return resumesList.size();
+        return resumes.size();
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
-        resumesList.add(r);
+    protected void doSave(Resume r, Integer searchKey) {
+        resumes.add(r);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        resumesList.set((Integer) searchKey, r);
+    protected void doUpdate(Resume r, Integer searchKey) {
+        resumes.set(searchKey, r);
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return resumesList.get((Integer) index);
+    protected Resume doGet(Integer index) {
+        return resumes.get(index);
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        return resumesList;
+        return resumes;
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        resumesList.remove(((Integer) searchKey).intValue());
+    protected void doDelete(Integer searchKey) {
+        resumes.remove((searchKey).intValue());
     }
 
     @Override
     public void clear() {
-        resumesList.clear();
+        resumes.clear();
     }
 
     @Override
     protected List<Resume> doCopyAll() {
-        return new ArrayList<>(resumesList);
+        return new ArrayList<>(resumes);
     }
 }

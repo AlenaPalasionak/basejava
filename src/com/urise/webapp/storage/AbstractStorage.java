@@ -6,61 +6,73 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<K> implements Storage {
 
-    protected abstract Object getSearchKey(String uuid);
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract K getSearchKey(String uuid);
 
-    protected abstract void doSave(Resume resume, Object searchKey);
+    protected abstract boolean isExist(K searchKey);
 
-    protected abstract void doUpdate(Resume resume, Object searchKey);
+    protected abstract void doSave(Resume resume, K searchKey);
 
-    protected abstract Resume doGet(Object searchKey);
+    protected abstract void doUpdate(Resume resume, K searchKey);
 
-    protected abstract void doDelete(Object searchKey);
+    protected abstract Resume doGet(K searchKey);
+
+    protected abstract void doDelete(K searchKey);
 
     protected abstract List<Resume> doCopyAll();
 
     public void save(Resume r) {
-        Object searchKey = getNotExistedKey(r.getUuid());
+        LOG.info("save" + r);
+        K searchKey = getNotExistedKey(r.getUuid());
         doSave(r, searchKey);
     }
 
     public void update(Resume r) {
-        Object searchKey = getExistedKey(r.getUuid());
+        LOG.info("update" + r);
+        K searchKey = getExistedKey(r.getUuid());
         doUpdate(r, searchKey);
     }
 
     public Resume get(String uuid) {
-        Object searchKey = getExistedKey(uuid);
+        LOG.info("get" + uuid);
+        K searchKey = getExistedKey(uuid);
         return doGet(searchKey);
     }
 
     @Override
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted");
         List<Resume> list = doCopyAll();
         Collections.sort(list);
         return list;
     }
 
     public void delete(String uuid) {
-        Object searchKey = getExistedKey(uuid);
+        LOG.info("delete" + uuid);
+        K searchKey = getExistedKey(uuid);
         doDelete(searchKey);
     }
 
-    private Object getExistedKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private K getExistedKey(String uuid) {
+        LOG.info("getExistedKey" + uuid);
+        K searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    private Object getNotExistedKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private K getNotExistedKey(String uuid) {
+        LOG.info("getNotExistedKey" + uuid);
+        K searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
         return searchKey;
