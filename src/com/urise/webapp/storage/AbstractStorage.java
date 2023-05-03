@@ -16,9 +16,9 @@ public abstract class AbstractStorage<K> implements Storage {
 
     protected abstract boolean isExist(K searchKey);
 
-    protected abstract void doSave(Resume resume, K searchKey);
+    protected abstract void doSave(Resume r, K searchKey);
 
-    protected abstract void doUpdate(Resume resume, K searchKey);
+    protected abstract void doUpdate(Resume r, K searchKey);
 
     protected abstract Resume doGet(K searchKey);
 
@@ -30,12 +30,6 @@ public abstract class AbstractStorage<K> implements Storage {
         LOG.info("save" + r);
         K searchKey = getNotExistedKey(r.getUuid());
         doSave(r, searchKey);
-    }
-
-    public void update(Resume r) {
-        LOG.info("update" + r);
-        K searchKey = getExistedKey(r.getUuid());
-        doUpdate(r, searchKey);
     }
 
     public Resume get(String uuid) {
@@ -50,6 +44,12 @@ public abstract class AbstractStorage<K> implements Storage {
         List<Resume> list = doCopyAll();
         Collections.sort(list);
         return list;
+    }
+
+    public void update(Resume r) {
+        LOG.info("update" + r);
+        K searchKey = getExistedKey(r.getUuid());
+        doUpdate(r, searchKey);
     }
 
     public void delete(String uuid) {

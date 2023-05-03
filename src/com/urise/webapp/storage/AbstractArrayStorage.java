@@ -14,7 +14,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected int size = 0;
 
     protected abstract Integer getSearchKey(String uuid);
+
     protected abstract void fillDeletedElement(int index);
+
     protected abstract void insertElement(Resume r, int index);
 
     @Override
@@ -33,13 +35,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public void doUpdate(Resume r, Integer searchKey) {
-        resumeStorage[searchKey] = r;
+    protected Resume doGet(Integer index) {
+        return resumeStorage[index];
     }
 
     @Override
-    protected Resume doGet(Integer index) {
-        return resumeStorage[index];
+    public void doUpdate(Resume r, Integer searchKey) {
+        resumeStorage[searchKey] = r;
     }
 
     @Override

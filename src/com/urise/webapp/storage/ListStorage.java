@@ -35,11 +35,6 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void doUpdate(Resume r, Integer searchKey) {
-        resumes.set(searchKey, r);
-    }
-
-    @Override
     protected Resume doGet(Integer index) {
         return resumes.get(index);
     }
@@ -47,6 +42,11 @@ public class ListStorage extends AbstractStorage<Integer> {
     @Override
     public List<Resume> getAllSorted() {
         return resumes;
+    }
+
+    @Override
+    protected void doUpdate(Resume r, Integer searchKey) {
+        resumes.set(searchKey, r);
     }
 
     @Override
