@@ -1,19 +1,60 @@
 package com.urise.webapp;
 
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 
+import java.time.Month;
+
+import static com.urise.webapp.model.ContactType.*;
+import static com.urise.webapp.model.SectionType.*;
 
 public class ResumeTestData {
 
     public static void main(String[] args) {
-        Resume resume = new Resume("1", "r1");
+        createResume("1", "Grigory");
+    }
 
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
+        resume.addContact(PHONE, "+7(921) 855-0482");
+        resume.addContact(SKYPE, "skype:grigory.kislin");
+        resume.addContact(MOBILE, "3465645645645");
+        resume.addContact(HOME_PHONE, "44 44 55");
+        resume.addContact(MAIL, "gkislin@yandex.ru");
+        resume.addContact(LINKED_IN, "https://www.linkedin.com/in/gkislin/");
+        resume.addContact(GIT_HUB, "https://github.com/gkislin");
+        resume.addContact(STACK_OVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
+        resume.addContact(HOME_PAGE, "http://gkislin.ru/");
 
-        //1/ ПРОВЕРЬТЕ свою модель: создайте класс ResumeTestData с методом main, а в нем объект Resume и заполните
-        // все его разделы данными, взятыми из Образца резюме. Выведите все секции на консоль
+        resume.addSection(OBJECTIVE, new SimpleTextSection
+                ("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        resume.addSection(PERSONAL, new SimpleTextSection
+                ("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.addSection(ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
+        resume.addSection(QUALIFICATIONS, new ListSection("QUALIFICATION1", "QUALIFICATION2", "QUALIFICATION3"));
+        resume.addSection(EXPERIENCE, new OrganisationSection(new Organisation
+                ("Java Online Projects"
+                        , "https://javaops.ru/"
+                        , new Organisation.Position(2013, Month.of(10), "\n" +
+                        "Автор проекта."
+                        , "Создание, организация и проведение Java онлайн проектов и стажировок.")
+                )));
 
-         //2/Реализуйте метод, который будет принимать uuid и fullName, создавать резюме,
-        // заполнять его данными (все секции резюме должны быть заполнены) и возвращать для тестирования в
-        // AbstractStorageTest. Используйте его для всех резюме, создаваемых в AbstractStorageTest
+        resume.addSection(SectionType.EDUCATION, new OrganisationSection(new Organisation
+                ("Coursera"
+                        , "https://www.coursera.org/learn/scala-functional-programming"
+                        , new Organisation.Position(2013, Month.of(3), 2013, Month.of(3)
+                        , "Functional Programming Principles in Scala' by Martin Odersky", "")
+                )));
+
+        System.out.println(resume.getUuid());
+        System.out.println(resume.getFullName());
+        for (ContactType ct : ContactType.values()) {
+            System.out.println(resume.getContact(ct));
+        }
+
+        for (SectionType st : SectionType.values()) {
+            System.out.println(resume.getSection(st));
+        }
+        return resume;
     }
 }

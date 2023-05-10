@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -21,10 +22,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1, "Addy");
-    private static final Resume RESUME_2 = new Resume(UUID_2, "Bob");
-    private static final Resume RESUME_3 = new Resume(UUID_3, "Catty");
-    private static final Resume RESUME_4 = new Resume(UUID_4, "Dick");
+    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Addy");
+    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Bob");
+    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Catty");
+    private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, "Dick");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -61,7 +62,7 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         final List<Resume> resumes = storage.getAllSorted();
         assertEquals(3, resumes.size());
-        assertEquals(resumes, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        assertEquals(Arrays.asList(RESUME_1, RESUME_2, RESUME_3), resumes);
         assertEquals(RESUME_3, resumes.get(2));
     }
 

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Organisation {
+public class Organisation {
     private final Link homePage;
     private List<Position> positions = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public abstract class Organisation {
                 '}';
     }
 
-    private static class Position {
+    public static class Position {
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title; //должность или название курса
