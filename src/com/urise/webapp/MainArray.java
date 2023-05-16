@@ -14,7 +14,6 @@ import java.util.List;
  * (just run, no need to understand)
  */
 public class MainArray {
-
     private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) throws IOException {
@@ -29,7 +28,6 @@ public class MainArray {
             }
             String param = null;
             String upDatedFullName = null;
-
             if (params.length == 3) {
                 upDatedFullName = params[2];
             }

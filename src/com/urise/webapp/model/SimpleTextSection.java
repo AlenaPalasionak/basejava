@@ -3,6 +3,7 @@ package com.urise.webapp.model;
 import java.util.Objects;
 
 public class SimpleTextSection extends Section { //Позиция, Личные качества,
+    private static final long serialVersionUID = 1L;
     private String text;
 
     public SimpleTextSection(String text) {
