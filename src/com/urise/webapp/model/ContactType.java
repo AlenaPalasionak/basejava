@@ -10,7 +10,6 @@ public enum ContactType {
     GIT_HUB("Профиль GitHub"),
     STACK_OVERFLOW("Профиль Stackoverflow"),
     HOME_PAGE("Домашняя страница");
-
     private String title;
 
     ContactType(String contact) {

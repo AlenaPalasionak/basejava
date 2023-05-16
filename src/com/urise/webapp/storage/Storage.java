@@ -5,7 +5,6 @@ import com.urise.webapp.model.Resume;
 import java.util.List;
 
 public interface Storage {
-
     int size();
 
     void save(Resume r);

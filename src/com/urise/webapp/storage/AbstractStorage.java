@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class AbstractStorage<K> implements Storage {
-
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     protected abstract K getSearchKey(String uuid);
