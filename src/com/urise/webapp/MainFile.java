@@ -3,19 +3,21 @@ package com.urise.webapp;
 import java.io.File;
 
 public class MainFile {
+
     public static void main(String[] args) {
         File dir = new File("src");
-        traverseRecursive(dir);
+        traverseRecursive(dir, "");
     }
 
-    public static void traverseRecursive(File dir) {
+    public static void traverseRecursive(File dir, String offset) {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println(file.getName());
+                    System.out.println(offset + "F: " + file.getName());
                 } else if (file.isDirectory()) {
-                    traverseRecursive(file);
+                    System.out.println(offset + "D: " + file.getName());
+                    traverseRecursive(file, offset + "  ");
                 }
             }
         }
