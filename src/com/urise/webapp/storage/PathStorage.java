@@ -44,6 +44,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void doSave(Resume r, Path path) {
         try {
+            // Files.setAttribute(path, "dos:readonly", false);
             Files.createFile(path);
         } catch (IOException e) {
             throw new StorageException("Couldn't create path " + path, getFileName(path), e);
@@ -74,7 +75,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.delete(path);
         } catch (IOException e) {
-            throw new StorageException("Path delete error" + path, getFileName(path), e);
+            throw new StorageException("Path delete error " + path, getFileName(path), e);
         }
     }
 
