@@ -25,9 +25,9 @@ public class ResumeTestData {
         resume.addContact(STACK_OVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
         resume.addContact(HOME_PAGE, "http://gkislin.ru/");
 
-        resume.addSection(OBJECTIVE, new SimpleTextSection
+        resume.addSection(OBJECTIVE, new TextSection
                 ("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        resume.addSection(PERSONAL, new SimpleTextSection
+        resume.addSection(PERSONAL, new TextSection
                 ("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.addSection(ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
         resume.addSection(QUALIFICATIONS, new ListSection("QUALIFICATION1", "QUALIFICATION2", "QUALIFICATION3"));

@@ -23,11 +23,11 @@ public class Organisation implements Serializable {
     }
 
     public Organisation(String name, String url, Position... positions) {
-        this(name, url, Arrays.asList(positions));
+        this(new Link(name, url), Arrays.asList(positions));
     }
 
-    public Organisation(String name, String url, List<Position> positions) {
-        this.homePage = new Link(name, url);
+    public Organisation(Link homePage, List<Position> positions) {
+        this.homePage = homePage;
         this.positions = positions;
     }
 
@@ -88,7 +88,8 @@ public class Organisation implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
+
         }
 
         public LocalDate getStartDate() {
