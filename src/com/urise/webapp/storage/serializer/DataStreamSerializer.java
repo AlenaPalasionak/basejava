@@ -4,10 +4,7 @@ import com.urise.webapp.model.*;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class DataStreamSerializer implements StreamSerializer {
@@ -21,14 +18,15 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             });
+            Map<SectionType, Section> sections = r.getSections();
 
-            writeCollection(dos, r.getSections().entrySet(), entry -> {
+            writeCollection(dos, sections.entrySet(), entry -> {
                 SectionType type = entry.getKey();
                 Section section = entry.getValue();
                 dos.writeUTF(type.name());
                 switch (type) {
-                    case PERSONAL:
                     case OBJECTIVE:
+                    case PERSONAL:
                         dos.writeUTF(((TextSection) section).getText());
                         break;
                     case ACHIEVEMENT:
@@ -37,10 +35,10 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        writeCollection(dos, ((OrganisationSection) section).getOrganisations(), org -> {
-                            dos.writeUTF(org.getHomePage().getName());
-                            dos.writeUTF(org.getHomePage().getUrl());
-                            writeCollection(dos, org.getPositions(), position -> {
+                        writeCollection(dos, ((OrganisationSection) section).getOrganisations(), organisation -> {
+                            dos.writeUTF(organisation.getHomePage().getName());
+                            dos.writeUTF(organisation.getHomePage().getUrl());
+                            writeCollection(dos, organisation.getPositions(), position -> {
                                 writeLocalDate(dos, position.getStartDate());
                                 writeLocalDate(dos, position.getEndDate());
                                 dos.writeUTF(position.getTitle());
@@ -51,15 +49,6 @@ public class DataStreamSerializer implements StreamSerializer {
                 }
             });
         }
-    }
-
-    private void writeLocalDate(DataOutputStream dos, LocalDate ld) throws IOException {
-        dos.writeInt(ld.getYear());
-        dos.writeInt(ld.getMonth().getValue());
-    }
-
-    private LocalDate readLocalDate(DataInputStream dis) throws IOException {
-        return LocalDate.of(dis.readInt(), dis.readInt(), 1);
     }
 
     @Override
@@ -75,6 +64,15 @@ public class DataStreamSerializer implements StreamSerializer {
             });
             return resume;
         }
+    }
+
+    private void writeLocalDate(DataOutputStream dos, LocalDate ld) throws IOException {
+        dos.writeInt(ld.getYear());
+        dos.writeInt(ld.getMonth().getValue());
+    }
+
+    private LocalDate readLocalDate(DataInputStream dis) throws IOException {
+        return LocalDate.of(dis.readInt(), dis.readInt(), 1);
     }
 
     private Section readSection(DataInputStream dis, SectionType sectionType) throws IOException {
