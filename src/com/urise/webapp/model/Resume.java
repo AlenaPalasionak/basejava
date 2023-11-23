@@ -16,8 +16,23 @@ import java.util.UUID;
 @XmlRootElement
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final Resume EMPTY = new Resume();
+
+    static {
+        EMPTY.setSection(SectionType.OBJECTIVE, TextSection.EMPTY);
+        EMPTY.setSection(SectionType.PERSONAL, TextSection.EMPTY);
+        EMPTY.setSection(SectionType.ACHIEVEMENT, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.QUALIFICATIONS, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY));
+        EMPTY.setSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY));
+    }
+
+    // Unique identifier
     private String uuid;
+
     private String fullName;
+
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
@@ -43,6 +58,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Map<ContactType, String> getContacts() {
         return contacts;
     }
@@ -51,28 +70,20 @@ public class Resume implements Comparable<Resume>, Serializable {
         return sections;
     }
 
-    public String getContact(ContactType contactType) {
-        return contacts.get(contactType);
+    public String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
-    public Section getSection(SectionType sectionType) {
-        return sections.get(sectionType);
+    public Section getSection(SectionType type) {
+        return sections.get(type);
     }
 
-    public void addContact(ContactType type, String contact) {
-        contacts.put(type, contact);
+    public void setContact(ContactType type, String value) {
+        contacts.put(type, value);
     }
 
-    public void addSection(SectionType type, Section section) {
+    public void setSection(SectionType type, Section section) {
         sections.put(type, section);
-    }
-
-    @Override
-    public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                ", fullName='" + fullName + '\'' +
-                '}';
     }
 
     @Override
@@ -80,19 +91,20 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        if (!Objects.equals(uuid, resume.uuid)) return false;
-        if (!Objects.equals(fullName, resume.fullName)) return false;
-        if (!contacts.equals(resume.contacts)) return false;
-        return sections.equals(resume.sections);
+        return Objects.equals(uuid, resume.uuid) &&
+                Objects.equals(fullName, resume.fullName) &&
+                Objects.equals(contacts, resume.contacts) &&
+                Objects.equals(sections, resume.sections);
     }
 
     @Override
     public int hashCode() {
-        int result = uuid != null ? uuid.hashCode() : 0;
-        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
-        result = 31 * result + contacts.hashCode();
-        result = 31 * result + sections.hashCode();
-        return result;
+        return Objects.hash(uuid, fullName, contacts, sections);
+    }
+
+    @Override
+    public String toString() {
+        return uuid + '(' + fullName + ')';
     }
 
     @Override

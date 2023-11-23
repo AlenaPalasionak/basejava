@@ -4,23 +4,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class OrganisationSection extends Section {
+public class OrganizationSection extends Section {
     private static final long serialVersionUID = 1L;
-    private List<Organisation> organisations;
+    private List<Organization> organisations;
 
-    public OrganisationSection() {
+    public OrganizationSection() {
     }
 
-    public OrganisationSection(Organisation... organisations) {
+    public OrganizationSection(Organization... organisations) {
         this(Arrays.asList(organisations));
     }
 
-    public OrganisationSection(List<Organisation> organisations) {
+    public OrganizationSection(List<Organization> organisations) {
         Objects.requireNonNull(organisations, "organisations must not be null");
         this.organisations = organisations;
     }
 
-    public List<Organisation> getOrganisations() {
+    public List<Organization> getOrganisations() {
         return organisations;
     }
 
@@ -28,7 +28,7 @@ public class OrganisationSection extends Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrganisationSection that = (OrganisationSection) o;
+        OrganizationSection that = (OrganizationSection) o;
         return organisations.equals(that.organisations);
     }
 

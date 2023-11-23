@@ -15,34 +15,34 @@ public class ResumeTestData {
 
     public static Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        resume.addContact(PHONE, "+7(921) 855-0482");
-        resume.addContact(SKYPE, "skype:grigory.kislin");
-        resume.addContact(MOBILE, "3465645645645");
-        resume.addContact(HOME_PHONE, "44 44 55");
-        resume.addContact(MAIL, "gkislin@yandex.ru");
-        resume.addContact(LINKED_IN, "https://www.linkedin.com/in/gkislin/");
-        resume.addContact(GIT_HUB, "https://github.com/gkislin");
-        resume.addContact(STACK_OVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
-        resume.addContact(HOME_PAGE, "http://gkislin.ru/");
+        resume.setContact(PHONE, "+7(921) 855-0482");
+        resume.setContact(SKYPE, "skype:grigory.kislin");
+        resume.setContact(MOBILE, "3465645645645");
+        resume.setContact(HOME_PHONE, "44 44 55");
+        resume.setContact(MAIL, "gkislin@yandex.ru");
+        resume.setContact(LINKEDIN, "https://www.linkedin.com/in/gkislin/");
+        resume.setContact(GITHUB, "settps://github.com/gkislin");
+        resume.setContact(STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
+        resume.setContact(HOME_PAGE, "http://gkislin.ru/");
 
-        resume.addSection(OBJECTIVE, new TextSection
+        resume.setSection(OBJECTIVE, new TextSection
                 ("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        resume.addSection(PERSONAL, new TextSection
+        resume.setSection(PERSONAL, new TextSection
                 ("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
-        resume.addSection(ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
-        resume.addSection(QUALIFICATIONS, new ListSection("QUALIFICATION1", "QUALIFICATION2", "QUALIFICATION3"));
-        resume.addSection(EXPERIENCE, new OrganisationSection(new Organisation
+        resume.setSection(ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
+        resume.setSection(QUALIFICATIONS, new ListSection("QUALIFICATION1", "QUALIFICATION2", "QUALIFICATION3"));
+        resume.setSection(EXPERIENCE, new OrganizationSection(new Organization
                 ("Java Online Projects"
                         , "https://javaops.ru/"
-                        , new Organisation.Position(2013, Month.of(10), "\n" +
+                        , new Organization.Position(2013, Month.of(10), "\n" +
                         "Автор проекта."
                         , "Создание, организация и проведение Java онлайн проектов и стажировок.")
                 )));
 
-        resume.addSection(SectionType.EDUCATION, new OrganisationSection(new Organisation
+        resume.setSection(SectionType.EDUCATION, new OrganizationSection(new Organization
                 ("Coursera"
                         , "https://www.coursera.org/learn/scala-functional-programming"
-                        , new Organisation.Position(2013, Month.of(3), 2013, Month.of(3)
+                        , new Organization.Position(2013, Month.of(3), 2013, Month.of(3)
                         , "Functional Programming Principles in Scala' by Martin Odersky", "")
                 )));
 

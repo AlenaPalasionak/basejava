@@ -11,12 +11,12 @@ public class XmlStreamSerializer implements StreamSerializer {
 
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(Resume.class
-                , Organisation.class
+                , Organization.class
                 , Link.class
-                , OrganisationSection.class
+                , OrganizationSection.class
                 , TextSection.class
                 , ListSection.class
-                , Organisation.Position.class);
+                , Organization.Position.class);
     }
 
     @Override

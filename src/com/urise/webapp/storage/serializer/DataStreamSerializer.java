@@ -27,7 +27,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        dos.writeUTF(((TextSection) section).getText());
+                        dos.writeUTF(((TextSection) section).getContent());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
@@ -35,7 +35,7 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        writeCollection(dos, ((OrganisationSection) section).getOrganisations(), organisation -> {
+                        writeCollection(dos, ((OrganizationSection) section).getOrganisations(), organisation -> {
                             dos.writeUTF(organisation.getHomePage().getName());
                             dos.writeUTF(organisation.getHomePage().getUrl());
                             writeCollection(dos, organisation.getPositions(), position -> {
@@ -57,10 +57,10 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            readItems(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readItems(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readItems(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                resume.addSection(sectionType, readSection(dis, sectionType));
+                resume.setSection(sectionType, readSection(dis, sectionType));
             });
             return resume;
         }
@@ -85,10 +85,10 @@ public class DataStreamSerializer implements StreamSerializer {
                 return new ListSection(readList(dis, dis::readUTF));
             case EXPERIENCE:
             case EDUCATION:
-                return new OrganisationSection(
-                        readList(dis, () -> new Organisation(
+                return new OrganizationSection(
+                        readList(dis, () -> new Organization(
                                 new Link(dis.readUTF(), dis.readUTF()),
-                                readList(dis, () -> new Organisation.Position(
+                                readList(dis, () -> new Organization.Position(
                                         readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()
                                 ))
                         )));
